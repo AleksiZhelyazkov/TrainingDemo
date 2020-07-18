@@ -8,6 +8,8 @@ namespace SeleniumTasks1.Pages
         }
         public IWebElement SelectDateTable => Driver.FindElement(By.Id("datePickerMonthYearInput"));
 
+        public IWebElement SelectDateAndTimeField => Driver.FindElement(By.Id("dateAndTimePickerInput"));
+
         public IWebElement currentMonth => Driver.FindElement(By.CssSelector(".react-datepicker__current-month"));
         public IWebElement currentDay => Driver.FindElement(By.CssSelector(".react-datepicker__day--selected"));
 
@@ -19,12 +21,25 @@ namespace SeleniumTasks1.Pages
             }
         }
 
+        public void ClearDateAndTimeField()
+        {
+            for (int i = 0; i < 21; i++)
+            {
+                SelectDateAndTimeField.SendKeys(Keys.Backspace);
+            }
+        }
+
         public void FillDate(string month, string day)
         {
             SelectDateTable.SendKeys($"{month}/{day}/2020");
         }
 
-        public string GetMonth(string month)
+        public void FillDateAndTime(string month, string day, string hour, string minute, string meridiem)
+        {
+            SelectDateAndTimeField.SendKeys($"{GetMonthName(month)} {day}, 2020 {hour}:{minute} {meridiem}");
+        }
+
+        public string GetMonthName(string month)
         {
             switch (month)
             {

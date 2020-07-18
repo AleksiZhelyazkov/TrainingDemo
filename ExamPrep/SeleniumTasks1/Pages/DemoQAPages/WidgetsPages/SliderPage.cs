@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json.Bson;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using OpenQA.Selenium;
 
 namespace SeleniumTasks1.Pages
 {
@@ -12,15 +7,24 @@ namespace SeleniumTasks1.Pages
         public SliderPage(IWebDriver driver) : base(driver)
         {
         }
+        public IWebElement SliderPath => Driver.FindElement(By.CssSelector(".range-slider"));
 
-        public IWebElement Slider => Driver.FindElement(By.XPath("//input[@type='range']"));
-
-        public void MoveSlider(int pixels)
+        public void MoveSlider(int points)
         {
-            //int pixels = 5;
-
-            Action.DragAndDropToOffset(Slider, pixels, 0).Perform();
-
+            if (points>=0)
+            {
+                for (int i = 0; i < points; i++)
+                {
+                    SliderPath.SendKeys(Keys.ArrowUp);
+                }
+            }
+            else if (points<0)
+            {
+                for (int i = points; i < 0; i++)
+                {
+                    SliderPath.SendKeys(Keys.ArrowDown);
+                }
+            }
         }
     }
 }

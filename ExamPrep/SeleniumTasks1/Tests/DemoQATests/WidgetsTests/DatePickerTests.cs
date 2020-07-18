@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using SeleniumTasks1.Pages;
 
 
@@ -48,7 +49,7 @@ namespace SeleniumTasks1.Tests.DemoQATests.WidgetsTests
             _datepickerPage.ClearSelectDate();
             _datepickerPage.FillDate(month, day);
 
-            string expectedDate = _datepickerPage.GetMonth(month) + " 2020";
+            string expectedDate = _datepickerPage.GetMonthName(month) + " 2020";
             string actualDate = _datepickerPage.currentMonth.Text;
             string expectedDay = day;
             string actualDay = _datepickerPage.currentDay.Text;
@@ -57,5 +58,23 @@ namespace SeleniumTasks1.Tests.DemoQATests.WidgetsTests
             Assert.AreEqual(expectedDay, actualDay);
         }
 
+        [Test]
+        [TestCase("01", "17")]
+        public void DateAndTimePicker(string month, string day)
+        {
+            _homePage.Widget.Click();
+            _datepickerPage.ScrollTo(_datepickerPage.DatePickerButton).Click();
+
+            string hour = "7";
+            string minute = "45";
+            string meridiem = "PM";
+            _datepickerPage.ClearDateAndTimeField();
+            _datepickerPage.FillDateAndTime(month, day, hour, minute, meridiem);
+
+            var state = Driver.FindElement(By.CssSelector(".react-datepicker__time-list-item--selected"));
+            string stateText = state.Text;
+
+            Assert.AreEqual(stateText, "19:45");
+        }
     }
 }

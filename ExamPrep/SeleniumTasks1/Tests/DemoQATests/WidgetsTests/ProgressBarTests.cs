@@ -29,10 +29,10 @@ namespace SeleniumTasks1.Tests.DemoQATests.WidgetsTests
             _homePage.Widget.Click();
             _progressBarPage.ScrollTo(_progressBarPage.ProgressBarButton).Click();
 
-            int percent = 22;
-            _progressBarPage.Load();
+            string percent = "22";
+            _progressBarPage.Load(percent);
 
-            int value = int.Parse(_progressBarPage.loadBar.GetAttribute("aria-valuenow"));
+            string value = _progressBarPage.loadBar.GetAttribute("aria-valuenow");
             Assert.AreEqual(percent, value);
         }
     }

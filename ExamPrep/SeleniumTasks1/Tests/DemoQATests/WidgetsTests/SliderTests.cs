@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using SeleniumTasks1.Pages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SeleniumTasks1.Tests.DemoQATests.WidgetsTests
 {
@@ -32,10 +29,11 @@ namespace SeleniumTasks1.Tests.DemoQATests.WidgetsTests
             _homePage.Widget.Click();
             _sliderPage.ScrollTo(_sliderPage.SliderButton).Click();
 
-            _sliderPage.MoveSlider(5);
+            int movePoints = -7;
+            _sliderPage.MoveSlider(movePoints);
 
-            int newPosition = int.Parse(_sliderPage.Slider.GetAttribute("value"));
-            Assert.AreEqual(newPosition, 51);
+            int newPosition = int.Parse(_sliderPage.SliderPath.GetAttribute("value"));
+            Assert.AreEqual((25+movePoints),newPosition);
         }
     }
 }

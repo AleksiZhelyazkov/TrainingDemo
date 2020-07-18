@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 
 namespace SeleniumTasks1.Pages
@@ -16,27 +17,18 @@ namespace SeleniumTasks1.Pages
         public IWebElement progressBar => Driver.FindElement(By.Id("progressBar"));
         public IWebElement startButton => Driver.FindElement(By.Id("startStopButton"));
 
-        public IWebElement loadBar => Driver.FindElement(By.XPath("//div[@id='progressBar']//div"));
+        public IWebElement loadBar => Driver.FindElement(By.CssSelector(".progress-bar"));
 
-        public void Load()
+        public void Load(string percent)
         {
-            //int percent = 22;
             this.WaitForLoad();
             startButton.Click();
 
-            var state = Wait.Until(ExpectedConditions.TextToBePresentInElementValue(loadBar, "22%"));
+            while (loadBar.GetAttribute("aria-valuenow") != percent)
+            {
+                
+            }
             startButton.Click();
-            
-            
-            //int value = int.Parse(loadBar.GetAttribute("aria-valuenow"));
-
-            //while (value != percent)
-            //{
-            //    value = int.Parse(loadBar.GetAttribute("aria-valuenow"));
-            //}
-            //startButton.Click();
-
-
         }
     }
 }
