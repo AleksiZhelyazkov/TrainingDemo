@@ -19,6 +19,8 @@ namespace SeleniumTasks1.Pages
 
         public void HoverMainMenu2()
         {
+
+
             //MainItem2.GetType();
             //MainItem2.Click();
             Action.MoveToElement(MainItem2).Perform();
